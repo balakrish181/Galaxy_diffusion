@@ -9,7 +9,7 @@ import torch
 import torch.nn.functional as F
 from diffusers import DDPMPipeline
 from config import TrainingConfig
-from evaluate import evaluate
+from evaluate import sample_images
 
 def train_loop(config: TrainingConfig, model, noise_scheduler, optimizer, train_dataloader, lr_scheduler):
     """
@@ -93,7 +93,7 @@ def train_loop(config: TrainingConfig, model, noise_scheduler, optimizer, train_
             pipeline = DDPMPipeline(unet=accelerator.unwrap_model(model), scheduler=noise_scheduler)
 
             if (epoch + 1) % config.save_image_epochs == 0 or epoch == config.num_epochs - 1:
-                evaluate(config, epoch, pipeline)
+                sample_images(config, epoch, pipeline)
 
             if (epoch + 1) % config.save_model_epochs == 0 or epoch == config.num_epochs - 1:
                 if config.push_to_hub:
