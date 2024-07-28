@@ -1,0 +1,7 @@
+pathlib
+PIL
+torch
+diffusers
+accelerate
+huggingface_hub
+tqdm
