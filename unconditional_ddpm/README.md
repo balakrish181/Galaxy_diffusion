@@ -19,3 +19,8 @@ The data used in this project is based on the Quijote simulations. Please ensure
 
 ## Acknowledgments
 The Quijote simulations are a collaborative effort to quantify the impact of cosmological parameters. This project utilizes these simulations to demonstrate the changes in the cosmic web due to varying parameters.
+
+## References
+
+[HuggingFace DDPM Tutorial](https://huggingface.co/docs/diffusers/en/tutorials/basic_training)
+[DDIM Inference](https://github.com/ermongroup/ddim)
