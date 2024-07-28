@@ -22,5 +22,5 @@ The Quijote simulations are a collaborative effort to quantify the impact of cos
 
 ## References
 
-[HuggingFace DDPM Tutorial](https://huggingface.co/docs/diffusers/en/tutorials/basic_training)
-[DDIM Inference](https://github.com/ermongroup/ddim)
+- [HuggingFace DDPM Tutorial](https://huggingface.co/docs/diffusers/en/tutorials/basic_training)
+- [DDIM Inference](https://github.com/ermongroup/ddim)
