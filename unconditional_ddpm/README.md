@@ -17,6 +17,11 @@ This project simulates the impact of changes in cosmological parameters on the c
 ## Data
 The data used in this project is based on the Quijote simulations. Please ensure you have the appropriate permissions to use and distribute the data.
 
+## Metric
+
+
+Acheived an FID score of 317, which is pretty bad! 
+
 ## Acknowledgments
 The Quijote simulations are a collaborative effort to quantify the impact of cosmological parameters. This project utilizes these simulations to demonstrate the changes in the cosmic web due to varying parameters.
 
