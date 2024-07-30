@@ -11,7 +11,7 @@ from diffusers import DDPMPipeline
 from config import TrainingConfig
 from evaluate import sample_images
 
-def train_loop(config: TrainingConfig, model, noise_scheduler, optimizer, train_dataloader, lr_scheduler):
+def train_loop(config: TrainingConfig, model, noise_scheduler, optimizer, train_dataloader, lr_scheduler,run):
     """
     The main training loop for the diffusion model.
 
@@ -87,6 +87,8 @@ def train_loop(config: TrainingConfig, model, noise_scheduler, optimizer, train_
             progress_bar.set_postfix(**logs)
             accelerator.log(logs, step=global_step)
             global_step += 1
+            run['train/loss'].append(logs["loss"])
+            run['learning_rate'].append(logs["lr"])
 
         # Sample images and save the model after each epoch
         if accelerator.is_main_process:
