@@ -53,10 +53,12 @@ def train_loop(config: TrainingConfig, model, noise_scheduler, optimizer, train_
 
     global_step = 0
 
+    
     for epoch in range(config.num_epochs):
         progress_bar = tqdm(total=len(train_dataloader), disable=not accelerator.is_local_main_process)
         progress_bar.set_description(f"Epoch {epoch}")
 
+        epoch_loss = 0
         for step, batch in enumerate(train_dataloader):
             clean_images = batch
             noise = torch.randn(clean_images.shape, device=clean_images.device)
@@ -83,13 +85,21 @@ def train_loop(config: TrainingConfig, model, noise_scheduler, optimizer, train_
                 optimizer.zero_grad()
 
             progress_bar.update(1)
+            epoch_loss += loss.detach().item()
             logs = {"loss": loss.detach().item(), "lr": lr_scheduler.get_last_lr()[0], "step": global_step}
             progress_bar.set_postfix(**logs)
             accelerator.log(logs, step=global_step)
             global_step += 1
-            run['train/loss'].append(logs["loss"])
-            run['learning_rate'].append(logs["lr"])
+            #run['train/loss'].append(logs["loss"])
+            #run['learning_rate'].append(logs["lr"])
+            
 
+
+        avg_epoch_loss = epoch_loss / len(train_dataloader)
+        print(f"Epoch {epoch} - Average Loss: {avg_epoch_loss:.4f}")
+
+        run['train/loss'].append(avg_epoch_loss)
+        run['learning_rate'].append(lr_scheduler.get_last_lr()[0])
         # Sample images and save the model after each epoch
         if accelerator.is_main_process:
             pipeline = DDPMPipeline(unet=accelerator.unwrap_model(model), scheduler=noise_scheduler)
