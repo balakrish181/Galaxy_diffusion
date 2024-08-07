@@ -23,12 +23,16 @@ from customDataClass import CosmosImageData
 from model import unet_model
 from train import train_loop
 
+
+print('File running')
+
 parser = argparse.ArgumentParser()
 parser.add_argument('--data_path',type=str,required=True,help='Enter the image paths directly')
 args = parser.parse_args()
 
 image_path = Path(args.data_path)
 
+print(f'Image path: {args.data_path}')
 
 NEPTUNE_API_KEY = 'eyJhcGlfYWRkcmVzcyI6Imh0dHBzOi8vYXBwLm5lcHR1bmUuYWkiLCJhcGlfdXJsIjoiaHR0cHM6Ly9hcHAubmVwdHVuZS5haSIsImFwaV9rZXkiOiJiNGQzNTc4ZS02YjMwLTRhODktOTE3ZC03NzQ3ZThlNzE5ZWMifQ=='
 
