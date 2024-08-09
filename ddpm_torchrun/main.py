@@ -21,6 +21,8 @@ class Trainer:
     def __init__(self, model, optimizer, lr_scheduler, train_data, config, noise_scheduler):
         self.gpu_id = int(os.environ['LOCAL_RANK'])
         self.model = model.to(self.gpu_id)
+        self.gradient_accumulation_steps = 4  # Accumulate gradients over 4 steps
+
         self.config = config
         self.train_data = train_data
         self.run = self.init_neptune()
@@ -67,12 +69,9 @@ class Trainer:
 
     def train_loop(self, max_epochs):
         self.model.train()
-
         for epoch in range(max_epochs):
-            # Ensure each process has a unique portion of the data
             self.train_data.sampler.set_epoch(epoch)
             epoch_loss = 0
-
             progress_bar = tqdm(total=len(self.train_data), disable=self.gpu_id != 0)
             progress_bar.set_description(f"Epoch {epoch}")
 
@@ -80,22 +79,22 @@ class Trainer:
                 clean_images = batch.to(self.gpu_id)
                 noise = torch.randn(clean_images.shape, device=clean_images.device)
                 bs = clean_images.shape[0]
-
                 timesteps = torch.randint(
                     0, self.noise_scheduler.config.num_train_timesteps, (bs,), device=clean_images.device,
                     dtype=torch.int64
                 )
-
                 noisy_images = self.noise_scheduler.add_noise(clean_images, noise, timesteps)
 
-                self.optimizer.zero_grad()
                 noise_pred = self.model(noisy_images, timesteps, return_dict=False)[0]
                 loss = torch.nn.functional.mse_loss(noise_pred, noise)
-                loss.backward()
+                loss = loss / self.gradient_accumulation_steps  # Scale loss
 
-                torch.nn.utils.clip_grad_norm_(self.model.parameters(), 1.0)
-                self.optimizer.step()
-                self.lr_scheduler.step()
+                loss.backward()
+                if (step + 1) % self.gradient_accumulation_steps == 0:
+                    torch.nn.utils.clip_grad_norm_(self.model.parameters(), 1.0)
+                    self.optimizer.step()
+                    self.lr_scheduler.step()
+                    self.optimizer.zero_grad()
 
                 epoch_loss += loss.item()
                 if self.gpu_id == 0:
@@ -116,6 +115,8 @@ class Trainer:
                     pipeline = DDPMPipeline(unet=self.model.module, scheduler=self.noise_scheduler)
                     pipeline.save_pretrained(self.config.output_dir)
 
+
+                    
     def evaluate(self):
         sample_images(self.config, self.epochs_run, self.pipeline)
 
