@@ -19,6 +19,8 @@ from customDataClass import CosmosImageData
 
 class Trainer:
     def __init__(self, model, optimizer, lr_scheduler, train_data, config, noise_scheduler):
+        self.gpu_id = int(os.environ['LOCAL_RANK'])
+        self.model = model.to(self.gpu_id)
         self.config = config
         self.train_data = train_data
         self.run = self.init_neptune()
@@ -26,7 +28,7 @@ class Trainer:
         self.pipeline = None  # TODO: Add a pipeline for inference
         self.model = model
         self.optimizer = optimizer
-        self.gpu_id = int(os.environ['LOCAL_RANK'])
+        
         self.lr_scheduler = lr_scheduler
         self.model = DDP(self.model, device_ids=[self.gpu_id])
         self.noise_scheduler = noise_scheduler
