@@ -163,4 +163,8 @@ def main(image_path: str, total_epochs: int, save_every: int, batch_size: int = 
 
 
 if __name__ == '__main__':
-    main(image_path='path_to_images', total_epochs=10, save_every=2)
+    import sys
+
+    image_path = sys.argv[1]
+    print(image_path)
+    main(image_path=image_path, total_epochs=10, save_every=2)

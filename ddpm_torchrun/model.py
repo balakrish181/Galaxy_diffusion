@@ -34,4 +34,3 @@ def unet_model(config):
 
 if __name__ == '__main__':
     model = unet_model(config)
-    # You can add additional code here to test the model or print its architecture.
