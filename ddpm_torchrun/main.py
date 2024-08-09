@@ -37,8 +37,12 @@ class Trainer:
         run = None
 
         while attempt <= max_retries:
-            if os.environ.get('NEPTUNE_API_TOKEN'):
-                NEPTUNE_API_KEY = os.environ.get('NEPTUNE_API_TOKEN')
+            # if os.environ.get('NEPTUNE_API_TOKEN'):
+            #     NEPTUNE_API_KEY = os.environ.get('NEPTUNE_API_TOKEN')
+            
+            if True:
+                NEPTUNE_API_KEY = 'eyJhcGlfYWRkcmVzcyI6Imh0dHBzOi8vYXBwLm5lcHR1bmUuYWkiLCJhcGlfdXJsIjoiaHR0cHM6Ly9hcHAubmVwdHVuZS5haSIsImFwaV9rZXkiOiJiNGQzNTc4ZS02YjMwLTRhODktOTE3ZC03NzQ3ZThlNzE5ZWMifQ=='
+            
             else:
                 NEPTUNE_API_KEY = input('Enter Neptune Key: ')
 
