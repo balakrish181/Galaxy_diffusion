@@ -156,7 +156,7 @@ def load_train_objs(train_dataloader, config):
     return model, optimizer, lr_scheduler
 
 
-def main(image_path: str, total_epochs: int, save_every: int, batch_size: int = 16):
+def main(image_path: str, total_epochs: int, save_every: int, batch_size: int = 4):
     config = TrainingConfig()
     ddp_setup()
 
