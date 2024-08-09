@@ -24,7 +24,7 @@ class TrainingConfig:
         overwrite_output_dir (bool): Whether to overwrite the output directory during re-training.
         seed (int): Random seed for reproducibility.
     """
-    image_size: int = 256
+    image_size: int = 32
     train_batch_size: int = 4
     eval_batch_size: int = 8
     num_epochs: int = 1000
