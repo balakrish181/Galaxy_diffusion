@@ -129,9 +129,6 @@ def prepare_dataloader(image_path: str, batch_size: int = 16, config=None):
         transforms.Resize((config.image_size)),
         transforms.ToTensor()
     ])
-    print('Some image paths')
-    paths = sorted(Path(image_path).glob('*.png'))[:2]
-    print(paths)
 
     dataset = CosmosImageData(image_path, transform=image_transform)
 
