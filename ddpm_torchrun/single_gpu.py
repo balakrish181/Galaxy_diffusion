@@ -34,13 +34,14 @@ class Trainer:
 
         while attempt <= max_retries:
             if True:
-                NEPTUNE_API_KEY = 'your_neptune_api_key_here'
+                NEPTUNE_API_KEY = 'eyJhcGlfYWRkcmVzcyI6Imh0dHBzOi8vYXBwLm5lcHR1bmUuYWkiLCJhcGlfdXJsIjoiaHR0cHM6Ly9hcHAubmVwdHVuZS5haSIsImFwaV9rZXkiOiJiNGQzNTc4ZS02YjMwLTRhODktOTE3ZC03NzQ3ZThlNzE5ZWMifQ=='
             else:
                 NEPTUNE_API_KEY = input('Enter Neptune Key: ')
 
             try:
                 run = neptune.init_run(
-                    project="Education/cosmos",
+                    project="Education/Dissertation",
+
                     api_token=NEPTUNE_API_KEY
                 )
                 break  # Break out of the loop if successful
