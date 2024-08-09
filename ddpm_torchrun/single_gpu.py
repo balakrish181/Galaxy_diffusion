@@ -40,7 +40,7 @@ class Trainer:
 
             try:
                 run = neptune.init_run(
-                    project="Education/Dissertation",
+                    project="Education/cosmos",
 
                     api_token=NEPTUNE_API_KEY
                 )
