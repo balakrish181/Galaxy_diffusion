@@ -15,7 +15,7 @@ from torchvision import transforms
 
 from config import TrainingConfig
 from customDataClass import CosmosImageData
-
+from pathlib import Path
 
 class Trainer:
     def __init__(self, model, optimizer, lr_scheduler, train_data, config, noise_scheduler):
@@ -172,5 +172,6 @@ if __name__ == '__main__':
     import sys
 
     image_path = sys.argv[1]
+    image_path = Path(image_path)
     print(image_path)
     main(image_path=image_path, total_epochs=10, save_every=2)
