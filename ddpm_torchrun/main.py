@@ -76,6 +76,8 @@ class Trainer:
             progress_bar.set_description(f"Epoch {epoch}")
 
             for step, batch in enumerate(self.train_data):
+
+                print(f'Step : {step}')
                 clean_images = batch.to(self.gpu_id)
                 noise = torch.randn(clean_images.shape, device=clean_images.device)
                 bs = clean_images.shape[0]
@@ -116,7 +118,7 @@ class Trainer:
                     pipeline.save_pretrained(self.config.output_dir)
 
 
-                    
+
     def evaluate(self):
         sample_images(self.config, self.epochs_run, self.pipeline)
 
