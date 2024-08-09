@@ -13,17 +13,33 @@ from torch.nn.parallel import DistributedDataParallel as DDP
 from model import UNet2DModel
 from diffusers.optimization import get_cosine_schedule_with_warmup
 from PIL import Image
+from evaluate import sample_images
+from torch.distributed import init_process_group,destroy_process_group
+from tqdm.auto import tqdm
+from diffusers import DDPMPipeline,DDPMScheduler
+
 
 
 
 config = TrainingConfig()
 
-class Trainer(TrainingConfig):
-    def __init__(self) -> None:
-        print(self.learning_rate)
-        self.run = self.init_neptune()
+def ddp_setup():
+    init_process_group(backend='nccl')
 
-        pass
+class Trainer(TrainingConfig):
+    def __init__(self,model,optimizer,lr_scheduler,train_data) -> None:
+        print(self.learning_rate)
+        self.train_data = train_data
+        self.config = TrainingConfig()
+        self.run = self.init_neptune()
+        self.epochs_run = 0
+        self.pipeline = None   # TODO: Add a pipeline for inference
+        self.model = model
+        self.optimizer = optimizer
+        self.gpu_id = int(os.environ['LOCAL_RANK'])
+        self.lr_scheduler = lr_scheduler
+        self.model = DDP(self.model,device_ids = [self.gpu_id])
+        self.noise_scheduler = DDPMScheduler(num_train_timesteps=1000,beta_schedule ='squaredcos_cap_v2')
 
     def init_neptune(self):
         max_retries = 2
@@ -56,11 +72,39 @@ class Trainer(TrainingConfig):
     def params_upload_neptune(self):
         self.run['parameters'] = asdict(TrainingConfig())
 
-    def train():
+    def train_loop(self,max_epochs):
+
+        for epoch in range(max_epochs):
+            
+            epoch_loss = 0
+
+            for step,batch in enumerate(self.train_data):
+                clean_images = batch
+                noise = torch.randn(clean_images.shape,device = clean_images.device)
+                bs = clean_images.shape[0]
+
+                timesteps = torch.randint(
+                        0, self.noise_scheduler.config.num_train_timesteps, (bs,), device=clean_images.device,
+                        dtype=torch.int64
+                        )
+                
+                noisy_image = self.noise_scheduler.add_noise(clean_images,noise,timesteps)
+                
+
+
+
+
         pass
 
-    def evaluate():
+    def evaluate(self):
+        sample_images(self.config,self.epochs_run,self.pipeline)
+
+    def load_snapshot():
         pass
+
+    def save_snapshot():
+        pass
+
 
 
 def prepare_dataloader(image_path:str,batch_size:int = 16):
@@ -100,7 +144,18 @@ def working_status(dataloader):
 
     Image.fromarray(((noisy_image.permute(0, 2, 3, 1) + 1.0) * 127.5).type(torch.uint8).numpy()[0])
 
-    pass
+    print(Image)
+    print('Scheduler success')
+
+
+def main(image_path:str,total_epochs:int,save_every:int,batch_size:int=16,snapshot_path:str = 'snapshot.pth'):
+    ddp_setup()
+    train_data = prepare_dataloader(image_path,batch_size)
+    model,optimizer,lr_scheduler = load_train_objs(train_data)
+    working_status(train_data)
+    trainer = Trainer(model,optimizer,lr_scheduler)
+
+
 
 
 if __name__=='__main__':
