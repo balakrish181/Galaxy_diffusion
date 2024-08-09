@@ -131,6 +131,8 @@ def prepare_dataloader(image_path: str, batch_size: int = 16, config=None):
     ])
 
     dataset = CosmosImageData(image_path, transform=image_transform)
+
+    print(f'Length of dataset : {len(dataset)}')
     data_loader = DataLoader(
         dataset,
         batch_size=batch_size,
@@ -138,7 +140,7 @@ def prepare_dataloader(image_path: str, batch_size: int = 16, config=None):
         shuffle=False,
         sampler=DistributedSampler(dataset)
     )
-
+    print(f'Length of dataloader : {len(data_loader)}')
     return data_loader
 
 
