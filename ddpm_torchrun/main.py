@@ -17,6 +17,8 @@ from config import TrainingConfig
 from customDataClass import CosmosImageData
 from pathlib import Path
 
+config = TrainingConfig()
+
 class Trainer:
     def __init__(self, model, optimizer, lr_scheduler, train_data, config, noise_scheduler):
         self.gpu_id = int(os.environ['LOCAL_RANK'])
@@ -113,14 +115,14 @@ class Trainer:
                 if (epoch + 1) % self.config.save_image_epochs == 0 or epoch == self.config.num_epochs - 1:
                     sample_images(self.config, epoch, self.pipeline)
 
-                if (epoch + 1) % self.config.save_model_epochs == 0 or epoch == self.config.num_epochs - 1:
+                if (epoch + 1) % self.config.save_image_epochs == 0 or epoch == self.config.num_epochs - 1:
                     pipeline = DDPMPipeline(unet=self.model.module, scheduler=self.noise_scheduler)
                     pipeline.save_pretrained(self.config.output_dir)
 
 
 
-    def evaluate(self):
-        sample_images(self.config, self.epochs_run, self.pipeline)
+    # def evaluate(self):
+    #     sample_images(self.config, self.epochs_run, self.pipeline)
 
 
 def ddp_setup():
@@ -159,7 +161,7 @@ def load_train_objs(train_dataloader, config):
     return model, optimizer, lr_scheduler
 
 
-def main(image_path: str, total_epochs: int, save_every: int, batch_size: int = 4):
+def main(image_path: str, total_epochs: int = config.num_epochs, save_every: int = config.save_image_epochs, batch_size: int = 4):
     config = TrainingConfig()
     ddp_setup()
 
@@ -180,4 +182,4 @@ if __name__ == '__main__':
     image_path = sys.argv[1]
     image_path = Path(image_path)
     print(image_path)
-    main(image_path=image_path, total_epochs=10, save_every=2)
+    main(image_path=image_path)
