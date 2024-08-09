@@ -159,6 +159,9 @@ def main(image_path: str, total_epochs: int, save_every: int, batch_size: int = 
     ddp_setup()
 
     train_data = prepare_dataloader(image_path, batch_size, config)
+
+    if train_data:
+        sys.exit()
     model, optimizer, lr_scheduler = load_train_objs(train_data, config)
     noise_scheduler = DDPMScheduler(num_train_timesteps=1000, beta_schedule='squaredcos_cap_v2')
 
