@@ -26,7 +26,7 @@ class CosmosImageData(Dataset):
             transform (Optional[Callable]): A transformation to apply to each image, such as resizing or normalization.
         """
         self.path = path
-        self.paths = sorted(Path(self.path).glob('*.png'))[:50]
+        self.paths = sorted(Path(self.path).glob('*.png'))
         self.transform = transform
         
     def __len__(self) -> int:
