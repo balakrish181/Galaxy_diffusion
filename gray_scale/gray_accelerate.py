@@ -246,9 +246,6 @@ def main(image_path:Path):
     #run = neptune_run()
     config = TrainingConfig()
     data_loader = load_data(image_path)
-
-    print(next(iter(data_loader)).shape)
-    sys.exit()
     model,optimizer,lr_scheduler = load_train_objs(data_loader)
     noise_scheduler = scheduler()
     train_loop(config,model,noise_scheduler,optimizer,data_loader,lr_scheduler)
