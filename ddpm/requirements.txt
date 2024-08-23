@@ -1,7 +1,0 @@
-accelerate
-diffusers
-huggingface-hub
-neptune
-torch
-transformers
-tqdm
