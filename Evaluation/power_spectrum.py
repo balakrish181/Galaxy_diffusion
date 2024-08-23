@@ -93,7 +93,9 @@ class PowerSpectraAnalyzer:
 
         # Plot the ratio
         plt.figure()
-        plt.loglog(k1, ratio, label='Original/Generated Ratio')
+        plt.xscale('log')
+        plt.plot(k1, ratio, label='Original/Generated Ratio')
+        #plt.hlines(y=np.ones(k1.size))
         plt.xlabel('k (h/Mpc)')
         plt.ylabel('Power Spectrum Ratio P_original(k) / P_generated(k)')
         plt.legend()
@@ -107,8 +109,8 @@ class PowerSpectraAnalyzer:
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description="Analyze power spectra of images.")
-    parser.add_argument("image_dir1", type=str,required=True, help="Directory path for the first set of images (original images)")
-    parser.add_argument("image_dir2", type=str,required=True, help="Directory path for the second set of images (Generated images)")
+    parser.add_argument("image_dir1", type=str, help="Directory path for the first set of images (original images)")
+    parser.add_argument("image_dir2", type=str, help="Directory path for the second set of images (Generated images)")
     parser.add_argument("--box_size", type=float, default=1000, help="Box size for the power spectra analysis")
     parser.add_argument("--MAS", type=str, default='CIC', help="Mass Assignment Scheme (e.g., 'CIC')")
     return parser.parse_args()
