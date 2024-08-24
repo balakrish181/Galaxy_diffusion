@@ -163,5 +163,7 @@ cython_debug/
 
 
 sample.ipynb 
+analyse.ipynb
+0_mean_density.npy
 
 /old_codes/
