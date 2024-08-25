@@ -17,7 +17,8 @@ While the Transformer models (DiT) showed good data representation, the UNet mod
 
 ## Evaluation
 
-To evaluate the quality of the generated data, we used power spectrum analysis to compare it with the original simulated data. The evaluation metric employed was the Mean Absolute Fractional Difference (MAFD), which measures the discrepancy between the generated and actual data. Our results yielded an MAFD of 1.10%, indicating high fidelity in the generated simulations.
+To evaluate the quality of the generated data, we used power spectrum analysis to compare it with the original simulated data. The evaluation metric employed was the Mean Absolute Fractional Difference (MAFD) of power spectrum, which measures the discrepancy between the generated and actual data. Our results yielded an MAFD of 1.10%, indicating high fidelity in the generated simulations.
+
 
 
 
