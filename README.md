@@ -11,7 +11,7 @@ Traditionally, cosmology simulations can take hours, or even thousands of core h
 To achieve our goal, we explored different Generative AI models, including:
 
 - **DiT (Diffusion Transformers)**: Effective in capturing complex data distributions but may require more data for optimal performance.
-- **UNet**: A type of convolutional neural network that performed exceptionally well with our smaller dataset of approximately 9000 samples.
+- **DDPM (Denoising Diffusion Probabilistic Models)**: A generative model that leverages diffusion processes to generate high-quality data. It performed exceptionally well with our smaller dataset of approximately 9000 samples.
 
 While the Transformer models (DiT) showed good data representation, the UNet model demonstrated superior performance for our dataset size, providing more accurate and reliable generated data.
 
