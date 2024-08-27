@@ -50,11 +50,9 @@ Since the Quijote simulations obey Periodic Boundary Conditions (PBCs), it is es
 ## References
 
 - [Denoising Diffusion Pytorch](https://github.com/lucidrains/denoising-diffusion-pytorch)
-- TODO: Complete all other references
-
-
 
 TODO List: 
+  - Complete all other references
   - add requirements.txt
   - talk about the training, architecture and model parameters
   - Calculate FID and sFID
