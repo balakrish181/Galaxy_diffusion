@@ -4,7 +4,7 @@ This repository explores the use of Generative AI models to replicate cosmology 
 
 ## Introduction
 
-Cosmology simulations traditionally require extensive computational resources, often taking hours or even thousands of core hours. Our goal is to accelerate this process by leveraging Generative AI to create data that closely resembles the output of traditional simulations. By preserving the underlying constraints and structures, we aim to provide a faster and more efficient method for estimating cosmological parameters.
+Cosmology simulations traditionally require extensive computational resources, often taking hundreds or even thousands of core hours. Our goal is to accelerate this process by leveraging Generative AI to create data that closely resembles the output of traditional simulations. By preserving the underlying constraints and structures, we aim to provide a faster and more efficient method for estimating cosmological parameters.
 
 ## Dataset
 
