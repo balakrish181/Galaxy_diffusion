@@ -54,7 +54,8 @@ Since the Quijote simulations obey Periodic Boundary Conditions (PBCs), it is es
 
 
 
-TODO: add requirements.txt
-TODO: talk about the training, architecture and model parameters
-TODO: Calculate FID and sFID
+TODO List: 
+  - add requirements.txt
+  - talk about the training, architecture and model parameters
+  - Calculate FID and sFID
 
