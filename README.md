@@ -4,7 +4,7 @@ This repository explores the use of Generative AI models to replicate cosmology 
 
 ## Introduction
 
-Cosmology simulations traditionally require extensive computational resources, often taking hours or even thousands of core hours. Our goal is to accelerate this process by leveraging Generative AI to create data that closely resembles the output of traditional simulations. By preserving the underlying constraints and structures, we aim to provide a faster and more efficient method for estimating cosmological parameters.
+Cosmology simulations traditionally require extensive computational resources, often taking hundreds or even thousands of core hours. Our goal is to accelerate this process by leveraging Generative AI to create data that closely resembles the output of traditional simulations. By preserving the underlying constraints and structures, we aim to provide a faster and more efficient method for estimating cosmological parameters.
 
 ## Dataset
 
@@ -50,11 +50,10 @@ Since the Quijote simulations obey Periodic Boundary Conditions (PBCs), it is es
 ## References
 
 - [Denoising Diffusion Pytorch](https://github.com/lucidrains/denoising-diffusion-pytorch)
-- TODO: Complete all other references
 
-
-
-TODO: add requirements.txt
-TODO: talk about the training, architecture and model parameters
-TODO: Calculate FID and sFID
+TODO List: 
+  - Complete all other references
+  - add requirements.txt
+  - talk about the training, architecture and model parameters
+  - Calculate FID and sFID
 
